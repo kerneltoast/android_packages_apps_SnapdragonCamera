@@ -4147,7 +4147,8 @@ public class PhotoModule
             } else if (notSame(pref,CameraSettings.KEY_ZSL,settingOff)) {
                 mUI.setPreference(CameraSettings.KEY_CAMERA_HDR, settingOff);
                 mUI.setPreference(CameraSettings.KEY_AE_BRACKET_HDR, settingOff);
-            } else {
+            } else if (notSame(pref, CameraSettings.KEY_CAMERA_HDR, settingOn) ||
+                notSame(pref, CameraSettings.KEY_AE_BRACKET_HDR, settingOn)) {
                 mUI.setPreference(CameraSettings.KEY_ZSL,settingOn);
             }
         }
