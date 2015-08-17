@@ -253,7 +253,7 @@
     <string name="pref_video_quality_entry_4kuhd" translatable="false">
     4k UHD</string>
     <!-- Video quality setting entry. Videos will be recorded in 1440p quality. [CHAR LIMIT=24] -->
-    <string name="pref_video_quality_entry_1440p" translatable="false">2k 1440p</string>
+    <string name="pref_video_quality_entry_1440p" translatable="false">2.5k 1440p</string>
     <!-- Video quality setting entry. Videos will be recorded in 1080p quality. [CHAR LIMIT=24] -->
     <string name="pref_video_quality_entry_1080p" translatable="false">HD 1080p</string>
     <!-- Video quality setting entry. Videos will be recorded in 720p quality. [CHAR LIMIT=24] -->
