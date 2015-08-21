@@ -812,7 +812,13 @@ public class VideoModule implements CameraModule,
         mTimeBetweenTimeLapseFrameCaptureMs = Integer.parseInt(frameIntervalStr);
         mCaptureTimeLapse = (mTimeBetweenTimeLapseFrameCaptureMs != 0);
         // TODO: This should be checked instead directly +1000.
-        if (mCaptureTimeLapse) quality += 1000;
+        if (mCaptureTimeLapse) {
+            if (quality == CamcorderProfile.QUALITY_1440P) {
+                quality = CamcorderProfile.QUALITY_TIME_LAPSE_1440P;
+            } else {
+                quality += 1000;
+            }
+        }
         mUnsupportedProfile = false;
         boolean hasProfile = CamcorderProfile.hasProfile(mCameraId, quality);
         if (!hasProfile) {
