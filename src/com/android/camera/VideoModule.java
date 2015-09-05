@@ -1620,7 +1620,7 @@ public class VideoModule implements CameraModule,
         if( mUnsupportedHFRVideoSize == true) {
             Log.e(TAG, "Unsupported HFR and video size combinations");
             RotateTextToast.makeText(mActivity,R.string.error_app_unsupported_hfr,
-                    Toast.LENGTH_SHORT).show();
+                    Toast.LENGTH_LONG).show();
             mStartRecPending = false;
             return;
         }

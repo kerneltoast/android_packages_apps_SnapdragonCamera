@@ -53,12 +53,12 @@
     <!-- Default auto exposure setting. Do not translate. -->
     <string name="pref_camera_autoexposure_default">frame-average</string>
     <!-- Settings screen, Select auto exposure title -->
-    <string name="pref_camera_autoexposure_title">Select Auto Exposure Mode</string>
+    <string name="pref_camera_autoexposure_title">Auto-exposure zone</string>
 
     <!-- Settings screen, auto exposure dialog radio button choices -->
-    <string name="pref_camera_autoexposure_entry_frameaverage">Frame Average</string>
-    <string name="pref_camera_autoexposure_entry_centerweighted">Center Weighted</string>
-    <string name="pref_camera_autoexposure_entry_spotmetering">Spot Metering</string>
+    <string name="pref_camera_autoexposure_entry_frameaverage">Frame-average</string>
+    <string name="pref_camera_autoexposure_entry_centerweighted">Center-weighted</string>
+    <string name="pref_camera_autoexposure_entry_spotmetering">Spot metering</string>
 
     <!-- Auto exposure entry values. Do not translate. -->
     <string name="pref_camera_autoexposure_value_frameaverage">frame-average</string>
@@ -115,7 +115,7 @@
     <string name="pref_camera_skinToneEnhancement_value_enable">enable</string>
     <string name="pref_camera_skinToneEnhancement_value_disable">disable</string>
     <!-- Settings screen, setting title text for ZSL-->
-    <string name="pref_camera_zsl_title">ZSL</string>
+    <string name="pref_camera_zsl_title">Zero shutter lag</string>
 
     <string name="pref_camera_zsl_default" translatable="false">on</string>
 
@@ -123,19 +123,19 @@
      <string name="pref_camera_selectablezoneaf_default">auto</string>
 
      <!-- Settings screen, Selectable zone af title -->
-     <string name="pref_camera_selectablezoneaf_title"> Selectable Zone Auto Focus</string>
+     <string name="pref_camera_selectablezoneaf_title">Autofocus zone</string>
 
      <!-- Settings screen, Selectable Zone Af dialog radio button choices -->
      <string name="pref_camera_selectablezoneaf_entry_auto">Auto</string>
-     <string name="pref_camera_selectablezoneaf_entry_spotmetering">Spot Metering</string>
-     <string name="pref_camera_selectablezoneaf_entry_centerweighted">Center Weighted</string>
-     <string name="pref_camera_selectablezoneaf_entry_frameaverage">Frame Average</string>
+     <string name="pref_camera_selectablezoneaf_entry_centerweighted">Center-weighted</string>
+     <string name="pref_camera_selectablezoneaf_entry_frameaverage">Frame-average</string>
+     <string name="pref_camera_selectablezoneaf_entry_spotmetering">Spot metering</string>
 
      <!-- Auto exposure entry values. Do not translate. -->
      <string name="pref_camera_selectablezoneaf_value_auto">auto</string>
-     <string name="pref_camera_selectablezoneaf_value_spotmetering">spot-metering</string>
      <string name="pref_camera_selectablezoneaf_value_centerweighted">center-weighted</string>
      <string name="pref_camera_selectablezoneaf_value_frameaverage">frame-average</string>
+     <string name="pref_camera_selectablezoneaf_value_spotmetering">spot-metering</string>
 
      <string name="pref_camera_advanced_feature_default">none</string>
 
@@ -289,7 +289,7 @@
     <string name="pref_camera_facedetection_default" translatable="false">off</string>
 
     <!-- Settings screen, Select Face Detection -->
-    <string name="pref_camera_facedetection_title">Face Detection</string>
+    <string name="pref_camera_facedetection_title">Face detection</string>
 
     <!-- Settings menu, Face Detection choices -->
     <string name="pref_camera_facedetection_entry_off">Off</string>
@@ -299,7 +299,7 @@
      <string name="pref_camera_redeyereduction_default" translatable="false">disable</string>
 
      <!-- Settings screen, Select Redeye Reduction -->
-     <string name="pref_camera_redeyereduction_title">Redeye Reduction</string>
+     <string name="pref_camera_redeyereduction_title">Red-eye reduction</string>
 
      <!-- Settings menu, redeye reduction choices -->
      <string name="pref_camera_redeyereduction_entry_enable">Enable</string>
@@ -311,16 +311,14 @@
      <string name="error_app_unsupported_hfr_selection">HFR/HSR is not supported for DIS/TimeLapse/HDR</string>
 
      <!-- The message is shown in dialog when the app encounters an unsupported resolution for HFR mode -->
-     <string name="error_app_unsupported_hfr">HFR is not supported for selected resolution</string>
+     <string name="error_app_unsupported_hfr">Slow-mo is not supported for the selected video size. Select a lower video size.</string>
 
      <!-- The message is shown in toast when the app encounters an unsupported resolution for DIS mode -->
      <string name="error_app_unsupported_dis">Unsupported video resolution for Display Image Stabilization(DIS)</string>
 
      <!-- The message is shown in dialog when the app
          encounters an unsupported resolution for HSR mode -->
-     <string name="error_app_unsupported_hsr">
-         HSR is not supported for selected resolution
-     </string>
+     <string name="error_app_unsupported_hsr">High-speed mode is not supported for the selected video size. Select a lower video size.</string>
 
      <!-- The message is shown in dialog when the app encounters an unsupported video codec for HFR mode -->
      <string name="error_app_unsupported_hfr_codec">Only H264 video encoding is supported when HFR is ON</string>
@@ -341,7 +339,7 @@
 
      <string name="pref_camera_ae_bracket_hdr_value_ae_bracket">AE-Bracket</string>
 
-     <string name="pref_camera_ae_bracket_hdr_title">AE-Bracket</string>
+     <string name="pref_camera_ae_bracket_hdr_title">Auto-exposure bracketing</string>
 
      <string name="pref_camera_ae_bracket_hdr_default" translatable="false">Off</string>
 
@@ -367,16 +365,16 @@
      <string name="pref_camera_hfr_default">off</string>
 
      <!-- Settings screen, Select hfr title -->
-     <string name="pref_camera_hfr_title">Video High FrameRate</string>
+     <string name="pref_camera_hfr_title">High-framerate recording</string>
 
      <!-- Settings screen, hfr radio button choices -->
      <string name="pref_camera_hfr_entry_off">Off</string>
-     <string name="pref_camera_hfr_entry_2x">HFR 60</string>
-     <string name="pref_camera_hfr_entry_3x">HFR 90</string>
-     <string name="pref_camera_hfr_entry_4x">HFR 120</string>
-     <string name="pref_camera_hfr_entry_hsr_60">HSR 60</string>
-     <string name="pref_camera_hfr_entry_hsr_90">HSR 90</string>
-     <string name="pref_camera_hfr_entry_hsr_120">HSR 120</string>
+     <string name="pref_camera_hfr_entry_2x">Slow-mo; 60 FPS</string>
+     <string name="pref_camera_hfr_entry_3x">Slow-mo; 90 FPS</string>
+     <string name="pref_camera_hfr_entry_4x">Slow-mo; 120 FPS</string>
+     <string name="pref_camera_hfr_entry_hsr_60">High-speed; 60 FPS</string>
+     <string name="pref_camera_hfr_entry_hsr_90">High-speed; 90 FPS</string>
+     <string name="pref_camera_hfr_entry_hsr_120">High-speed; 120 FPS</string>
 
      <!-- HFR entry values. Do not translate. -->
      <string name="pref_camera_hfr_value_off">off</string>
@@ -402,7 +400,7 @@
      <string name="pref_camera_see_more_value_on">on</string>
 
         <!-- Denoise Settings screen, setting title text -->
-    <string name="pref_camera_denoise_title">Wavelet Denoise Mode</string>
+    <string name="pref_camera_denoise_title">Denoise</string>
     <string name="pref_camera_denoise_default" translatable="false">denoise-on</string>
 
     <!-- Denoise Settings screen, Record location dialog choices -->
@@ -434,7 +432,7 @@
      <string name="pref_camera_iso_value_iso1600">ISO1600</string>
 
      <!-- Settings screen, Anti Banding title -->
-     <string name="pref_camera_antibanding_title">Anti Banding</string>
+     <string name="pref_camera_antibanding_title">Anti-banding</string>
 
      <!-- Default Anti Banding setting. -->
      <string name="pref_camera_antibanding_default">auto</string>
@@ -502,7 +500,7 @@
     <!-- Settings screen, Multiple levels entries -->
     <string name="pref_camera_sharpness_entry_level0">Level 0</string>
     <string name="pref_camera_sharpness_entry_level1">Level 1</string>
-    <string name="pref_camera_sharpness_entry_level2">Level 2(Default)</string>
+    <string name="pref_camera_sharpness_entry_level2">Level 2 (default)</string>
     <string name="pref_camera_sharpness_entry_level3">Level 3</string>
     <string name="pref_camera_sharpness_entry_level4">Level 4</string>
     <string name="pref_camera_sharpness_entry_level5">Level 5</string>
@@ -514,7 +512,7 @@
     <string name="pref_camera_contrast_entry_level2">Level 2</string>
     <string name="pref_camera_contrast_entry_level3">Level 3</string>
     <string name="pref_camera_contrast_entry_level4">Level 4</string>
-    <string name="pref_camera_contrast_entry_level5">Level 5(Default)</string>
+    <string name="pref_camera_contrast_entry_level5">Level 5 (default)</string>
     <string name="pref_camera_contrast_entry_level6">Level 6</string>
     <string name="pref_camera_contrast_entry_level7">Level 7</string>
     <string name="pref_camera_contrast_entry_level8">Level 8</string>
@@ -527,7 +525,7 @@
     <string name="pref_camera_saturation_entry_level2">Level 2</string>
     <string name="pref_camera_saturation_entry_level3">Level 3</string>
     <string name="pref_camera_saturation_entry_level4">Level 4</string>
-    <string name="pref_camera_saturation_entry_level5">Level 5(Default)</string>
+    <string name="pref_camera_saturation_entry_level5">Level 5 (default)</string>
     <string name="pref_camera_saturation_entry_level6">Level 6</string>
     <string name="pref_camera_saturation_entry_level7">Level 7</string>
     <string name="pref_camera_saturation_entry_level8">Level 8</string>
@@ -801,7 +799,7 @@
     <string name="flash_aebracket_message">Flash is not supported in AE-Bracket Mode</string>
 
     <!-- Settings screen, setting title text for Auto HDR-->
-    <string name="pref_camera_auto_hdr_title">AUTO HDR</string>
+    <string name="pref_camera_auto_hdr_title">Auto HDR</string>
     <string name="pref_camera_auto_hdr_default" translatable="false">
     disable</string>
 

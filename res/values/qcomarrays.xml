@@ -502,15 +502,15 @@
 
     <!-- Camera Preferences Auto Exposure dialog box entries -->
      <string-array name="pref_camera_autoexposure_entries">
-         <item>@string/pref_camera_autoexposure_entry_frameaverage</item>
          <item>@string/pref_camera_autoexposure_entry_centerweighted</item>
+         <item>@string/pref_camera_autoexposure_entry_frameaverage</item>
          <item>@string/pref_camera_autoexposure_entry_spotmetering</item>
      </string-array>
 
      <!-- Do not localize entryvalues -->
      <string-array name="pref_camera_autoexposure_entryvalues">
-         <item>@string/pref_camera_autoexposure_value_frameaverage</item>
          <item>@string/pref_camera_autoexposure_value_centerweighted</item>
+         <item>@string/pref_camera_autoexposure_value_frameaverage</item>
          <item>@string/pref_camera_autoexposure_value_spotmetering</item>
      </string-array>
     <!-- Camera Preferences Video Encoder dialog box entries -->
@@ -580,16 +580,16 @@
     <!-- Camera Preferences Selectable Zone AF dialog box entries -->
     <string-array name="pref_camera_selectablezoneaf_entries" translatable="false">
         <item>@string/pref_camera_selectablezoneaf_entry_auto</item>
-        <item>@string/pref_camera_selectablezoneaf_entry_spotmetering</item>
         <item>@string/pref_camera_selectablezoneaf_entry_centerweighted</item>
         <item>@string/pref_camera_selectablezoneaf_entry_frameaverage</item>
+        <item>@string/pref_camera_selectablezoneaf_entry_spotmetering</item>
     </string-array>
 
     <string-array name="pref_camera_selectablezoneaf_entryvalues" translatable="false">
          <item>@string/pref_camera_selectablezoneaf_value_auto</item>
-         <item>@string/pref_camera_selectablezoneaf_value_spotmetering</item>
          <item>@string/pref_camera_selectablezoneaf_value_centerweighted</item>
          <item>@string/pref_camera_selectablezoneaf_value_frameaverage</item>
+         <item>@string/pref_camera_selectablezoneaf_value_spotmetering</item>
     </string-array>
 
 
@@ -689,13 +689,13 @@
 
     <!-- AUTO HDR  dialog box entries -->
     <string-array name="pref_camera_auto_hdr_entries" translatable="false">
-    <item>@string/pref_camera_auto_hdr_entry_enable</item>
     <item>@string/pref_camera_auto_hdr_entry_disable</item>
+    <item>@string/pref_camera_auto_hdr_entry_enable</item>
     </string-array>
 
     <string-array name="pref_camera_auto_hdr_entryvalues" translatable="false">
-    <item>@string/pref_camera_auto_hdr_value_enable</item>
     <item>@string/pref_camera_auto_hdr_value_disable</item>
+    <item>@string/pref_camera_auto_hdr_value_enable</item>
     </string-array>
 
     <!-- CDS  dialog box entries -->

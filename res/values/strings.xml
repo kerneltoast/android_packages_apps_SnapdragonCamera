@@ -221,7 +221,7 @@
     <string name="pref_camera_timer_sound_title">Beep during countdown</string>
 
     <!-- Entry of camera save path -->
-    <string name="pref_camera_savepath_title">Storage Position</string>
+    <string name="pref_camera_savepath_title">Storage location</string>
     <string name="pref_camera_savepath_default">0</string>
     <string name="pref_camera_savepath_entry_0">Internal Storage</string>
     <string name="pref_camera_savepath_entry_1">USB OTG drive</string>
@@ -237,7 +237,7 @@
     <string name="setting_on_value" translatable="false">on</string>
 
     <!-- The Video quality settings in preference [CHAR LIMIT=21] -->
-    <string name="pref_video_quality_title">Video quality</string>
+    <string name="pref_video_quality_title">Video size</string>
     <!-- The default quality value is NULL -->
     <string name="pref_video_quality_default" translatable="false"></string>
     <!-- Video quality setting entry.
@@ -263,7 +263,7 @@
 
     <!-- Describes the preference dialog for choosing interval between frame capture for
     time lapse recording. Appears at top of the dialog. [CHAR LIMIT=30] -->
-    <string name="pref_video_time_lapse_frame_interval_title">Time lapse</string>
+    <string name="pref_video_time_lapse_frame_interval_title">Timelapse</string>
     <string name="pref_video_time_lapse_frame_interval_default" translatable="false">0</string>
 
     <!-- Settings screen, Camera setting category title -->
