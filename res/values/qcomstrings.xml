@@ -108,8 +108,8 @@
     <string name="pref_camera_skinToneEnhancement_title">Skin Tone Enhancement</string>
 
     <!-- Settings screen, Skin Tone Enhancement radio button choices -->
-    <string name="pref_camera_skinToneEnhancement_entry_enable">Enable</string>
-    <string name="pref_camera_skinToneEnhancement_entry_disable">Disable</string>
+    <string name="pref_camera_skinToneEnhancement_entry_enable">On</string>
+    <string name="pref_camera_skinToneEnhancement_entry_disable">Off</string>
 
     <!-- Skin Tone Enhancement entry values. Do not translate. -->
     <string name="pref_camera_skinToneEnhancement_value_enable">enable</string>
@@ -241,16 +241,16 @@
     <string name="pref_camera_video_cds_value_auto">auto</string>
 
     <!-- Settings screen, TNR location dialog choices -->
-    <string name="pref_camera_tnr_entry_disable">Disable</string>
-    <string name="pref_camera_tnr_entry_enable">Enable</string>
+    <string name="pref_camera_tnr_entry_disable">Off</string>
+    <string name="pref_camera_tnr_entry_enable">On</string>
 
     <!-- Settings screen, TNR location dialog choices -->
     <string name="pref_camera_tnr_value_off">off</string>
     <string name="pref_camera_tnr_value_on">on</string>
 
     <!-- Settings screen, video TNR location dialog choices -->
-    <string name="pref_camera_video_tnr_entry_disable">Disable</string>
-    <string name="pref_camera_video_tnr_entry_enable">Enable</string>
+    <string name="pref_camera_video_tnr_entry_disable">Off</string>
+    <string name="pref_camera_video_tnr_entry_enable">On</string>
 
     <!-- Settings screen, video TNR location dialog choices -->
     <string name="pref_camera_video_tnr_value_off">off</string>
@@ -302,8 +302,8 @@
      <string name="pref_camera_redeyereduction_title">Red-eye reduction</string>
 
      <!-- Settings menu, redeye reduction choices -->
-     <string name="pref_camera_redeyereduction_entry_enable">Enable</string>
-     <string name="pref_camera_redeyereduction_entry_disable">Disable</string>
+     <string name="pref_camera_redeyereduction_entry_enable">On</string>
+     <string name="pref_camera_redeyereduction_entry_disable">Off</string>
      <!-- Default mce setting. Do not translate. -->
      <string name="pref_camera_mce_default">enable</string>
 
@@ -726,8 +726,8 @@
      <string name="pref_camera_histogram_title">Histogram</string>
 
      <!-- Settings screen, Histogram radio button choices -->
-     <string name="pref_camera_histogram_entry_enable">Enable</string>
-     <string name="pref_camera_histogram_entry_disable">Disable</string>
+     <string name="pref_camera_histogram_entry_enable">On</string>
+     <string name="pref_camera_histogram_entry_disable">Off</string>
 
      <!-- Histogram entry values. Do not translate. -->
      <string name="pref_camera_histogram_value_enable">enable</string>
@@ -804,8 +804,8 @@
     disable</string>
 
     <!-- Settings screen, Auto HDR location dialog choices -->
-    <string name="pref_camera_auto_hdr_entry_enable">Enable</string>
-    <string name="pref_camera_auto_hdr_entry_disable">Disable</string>
+    <string name="pref_camera_auto_hdr_entry_enable">On</string>
+    <string name="pref_camera_auto_hdr_entry_disable">Off</string>
     <string name="pref_camera_auto_hdr_value_enable">enable</string>
     <string name="pref_camera_auto_hdr_value_disable">disable</string>
 
