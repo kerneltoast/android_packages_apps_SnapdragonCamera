@@ -742,7 +742,8 @@
     <string name="pref_camera_picturesize_entry_176x144">QCIF</string>
 
     <string name="pref_camera_focusmode_entry_normal">Normal</string>
-    <string name="pref_camera_focusmode_entry_continuous">CAF</string>
+    <string name="pref_camera_focusmode_entry_continuous">Continuous picture</string>
+    <string name="pref_video_focusmode_entry_continuous">Continuous video</string>
 
     <string name="pref_camera_scenemode_entry_asd">ASD</string>
     <!-- Scene mode that takes an image with as little noise as possible so details of the subject are maintained. -->

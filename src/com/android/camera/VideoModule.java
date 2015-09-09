@@ -531,7 +531,7 @@ public class VideoModule implements CameraModule,
         if (mMeteringAreaSupported)
             mParameters.setMeteringAreas(mFocusManager.getMeteringAreas());
         if (mFocusAreaSupported || mMeteringAreaSupported) {
-            mParameters.setFocusMode(mFocusManager.getFocusMode());
+            mParameters.setFocusMode(mFocusManager.getFocusMode(true));
             mCameraDevice.setParameters(mParameters);
         }
     }
@@ -2424,6 +2424,9 @@ public class VideoModule implements CameraModule,
 
         //set power mode settings
         updatePowerMode();
+
+        // Set focus mode
+        mParameters.setFocusMode(mFocusManager.getFocusMode(true));
     }
 
     @SuppressWarnings("deprecation")
@@ -2468,7 +2471,7 @@ public class VideoModule implements CameraModule,
         }
 
         // Set focus mode
-        mParameters.setFocusMode(mFocusManager.getFocusMode());
+        mParameters.setFocusMode(mFocusManager.getFocusMode(true));
 
         mParameters.set(CameraUtil.RECORDING_HINT, CameraUtil.TRUE);
 
