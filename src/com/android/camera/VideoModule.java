@@ -330,6 +330,7 @@ public class VideoModule implements CameraModule,
     private boolean mUnsupportedHFRVideoCodec = false;
     private String mDefaultAntibanding = null;
     boolean mUnsupportedProfile = false;
+    boolean mUnsupportedHDR = false;
 
     public void onScreenSizeChanged(int width, int height) {
         if (mFocusManager != null) mFocusManager.setPreviewSize(width, height);
@@ -1760,6 +1761,15 @@ public class VideoModule implements CameraModule,
             mStartRecPending = false;
             return;
         }
+
+        if (mUnsupportedHDR == true) {
+            Log.e(TAG, "Unsupported video HDR mode");
+            RotateTextToast.makeText(mActivity, R.string.error_app_unsupported_video_hdr,
+                    Toast.LENGTH_LONG).show();
+            mStartRecPending = false;
+            return;
+        }
+
         //??
         //if (!mCameraDevice.waitDone()) return;
         mCurrentVideoUri = null;
@@ -2376,7 +2386,13 @@ public class VideoModule implements CameraModule,
                 mActivity.getString(R.string.pref_camera_video_hdr_default));
         Log.v(TAG, "Video HDR Setting =" + videoHDR);
         if (isSupported(videoHDR, mParameters.getSupportedVideoHDRModes())) {
-             mParameters.setVideoHDRMode(videoHDR);
+             if (((videoWidth * videoHeight) == (4096 * 2160)) &&
+                   videoHDR.equals("on")) {
+                 mUnsupportedHDR = true;
+             } else {
+                 mUnsupportedHDR = false;
+                 mParameters.setVideoHDRMode(videoHDR);
+             }
         } else
              mParameters.setVideoHDRMode("off");
 
