@@ -258,6 +258,8 @@ public class PhotoModule
 
     private boolean mShutterPressing = false;
 
+    private int mZslSavedSetting = 0;
+
     private Runnable mDoSnapRunnable = new Runnable() {
         @Override
         public void run() {
@@ -4163,13 +4165,18 @@ public class PhotoModule
             //HDR internally uses AE-bracketing. Disable both if not supported.
             if (notSame(pref, CameraSettings.KEY_CAMERA_HDR, settingOff) ||
                 notSame(pref, CameraSettings.KEY_AE_BRACKET_HDR, settingOff)) {
+                ListPreference zslPref = mPreferenceGroup.findPreference(CameraSettings.KEY_ZSL);
+                mZslSavedSetting = zslPref.getValue().equals("on") ? 1 : 0;
                 mUI.setPreference(CameraSettings.KEY_ZSL,settingOff);
             } else if (notSame(pref,CameraSettings.KEY_ZSL,settingOff)) {
+                mZslSavedSetting = 1;
                 mUI.setPreference(CameraSettings.KEY_CAMERA_HDR, settingOff);
                 mUI.setPreference(CameraSettings.KEY_AE_BRACKET_HDR, settingOff);
             } else if (notSame(pref, CameraSettings.KEY_CAMERA_HDR, settingOn) ||
                 notSame(pref, CameraSettings.KEY_AE_BRACKET_HDR, settingOn)) {
-                mUI.setPreference(CameraSettings.KEY_ZSL,settingOn);
+                if (mZslSavedSetting == 1) {
+                    mUI.setPreference(CameraSettings.KEY_ZSL,settingOn);
+                }
             }
         }
 
