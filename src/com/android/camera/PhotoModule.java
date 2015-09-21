@@ -1813,6 +1813,7 @@ public class PhotoModule
                     sceneMode, redeyeReduction, aeBracketing);
             if (CameraUtil.SCENE_MODE_HDR.equals(mSceneMode)) {
                 disableLongShot = true;
+                mUI.overrideSettings(CameraSettings.KEY_ZSL, "off");
             }
         } else if (mFocusManager.isZslEnabled()) {
             focusMode = mParameters.getFocusMode();
