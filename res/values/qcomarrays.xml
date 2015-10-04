@@ -807,5 +807,19 @@
         <item>@drawable/ic_ts_makeup_on</item>
     </string-array>
 
+    <string-array name="pref_camera_touchfocus_duration_entries" translatable="false">
+        <item>@string/pref_camera_touchfocus_duration_entry_3</item>
+        <item>@string/pref_camera_touchfocus_duration_entry_5</item>
+        <item>@string/pref_camera_touchfocus_duration_entry_10</item>
+        <item>@string/pref_camera_touchfocus_duration_entry_infinity</item>
+    </string-array>
+
+    <string-array name="pref_camera_touchfocus_duration_entry_values" translatable="false">
+        <item>@string/pref_camera_touchfocus_duration_value_3</item>
+        <item>@string/pref_camera_touchfocus_duration_value_5</item>
+        <item>@string/pref_camera_touchfocus_duration_value_10</item>
+        <item>@string/pref_camera_touchfocus_duration_value_infinity</item>
+    </string-array>
+
 </resources>
 

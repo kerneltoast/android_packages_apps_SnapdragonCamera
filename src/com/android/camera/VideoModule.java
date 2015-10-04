@@ -2461,6 +2461,21 @@ public class VideoModule implements CameraModule,
 
         // Set focus mode
         mParameters.setFocusMode(mFocusManager.getFocusMode(true));
+
+        // Set touch-focus duration
+        String touchFocusDuration = mPreferences.getString(
+                CameraSettings.KEY_TOUCH_FOCUS_DURATION, null);
+        if (touchFocusDuration != null) {
+            if (touchFocusDuration.equals("0")) {
+                mFocusManager.setTouchFocusDuration(2147483647);
+            } else if (touchFocusDuration.equals("3")) {
+                mFocusManager.setTouchFocusDuration(3000);
+            } else if (touchFocusDuration.equals("5")) {
+                mFocusManager.setTouchFocusDuration(5000);
+            } else if (touchFocusDuration.equals("10")) {
+                mFocusManager.setTouchFocusDuration(10000);
+            }
+        }
     }
 
     @SuppressWarnings("deprecation")

@@ -239,6 +239,8 @@ public class CameraSettings {
     public static final String KEY_TS_MAKEUP_LEVEL_WHITEN  = "pref_camera_tsmakeup_whiten";
     public static final String KEY_TS_MAKEUP_LEVEL_CLEAN   = "pref_camera_tsmakeup_clean";
 
+    public static final String KEY_TOUCH_FOCUS_DURATION = "pref_camera_touchfocus_duration_key";
+
     public static final String EXPOSURE_DEFAULT_VALUE = "0";
 
     public static final int CURRENT_VERSION = 5;

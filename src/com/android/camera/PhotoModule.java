@@ -3264,6 +3264,21 @@ public class PhotoModule
 
         mLongShotMaxSnap = SystemProperties.getInt(PERSIST_LONGSHOT_MAX_SNAP, -1);
         mParameters.set("max-longshot-snap",mLongShotMaxSnap);
+
+        // Set touch-focus duration
+        String touchFocusDuration = mPreferences.getString(
+                CameraSettings.KEY_TOUCH_FOCUS_DURATION, null);
+        if (touchFocusDuration != null) {
+            if (touchFocusDuration.equals("0")) {
+                mFocusManager.setTouchFocusDuration(2147483647);
+            } else if (touchFocusDuration.equals("3")) {
+                mFocusManager.setTouchFocusDuration(3000);
+            } else if (touchFocusDuration.equals("5")) {
+                mFocusManager.setTouchFocusDuration(5000);
+            } else if (touchFocusDuration.equals("10")) {
+                mFocusManager.setTouchFocusDuration(10000);
+            }
+        }
     }
 
     private int estimateJpegFileSize(final Size size, final String quality) {

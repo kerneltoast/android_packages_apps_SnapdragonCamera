@@ -884,5 +884,20 @@
      <string name="text_tsmakeup_alert_quit">Quit</string>
 
     <string name="all_in_focus">All in Focus</string>
+
+     <!-- Touch-focus duration settings -->
+     <string name="pref_camera_touchfocus_duration_title">Tap-to-focus duration</string>
+     <string name="pref_camera_touchfocus_duration_default">3</string>
+
+     <string name="pref_camera_touchfocus_duration_entry_3">3 seconds</string>
+     <string name="pref_camera_touchfocus_duration_entry_5">5 seconds</string>
+     <string name="pref_camera_touchfocus_duration_entry_10">10 seconds</string>
+     <string name="pref_camera_touchfocus_duration_entry_infinity">Infinity</string>
+
+     <string name="pref_camera_touchfocus_duration_value_3">3</string>
+     <string name="pref_camera_touchfocus_duration_value_5">5</string>
+     <string name="pref_camera_touchfocus_duration_value_10">10</string>
+     <string name="pref_camera_touchfocus_duration_value_infinity">0</string>
+
 </resources>
 
