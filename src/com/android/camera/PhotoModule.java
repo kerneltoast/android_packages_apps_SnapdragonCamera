@@ -1792,6 +1792,12 @@ public class PhotoModule
                     Toast.LENGTH_LONG).show();
         }
 
+        if (!Parameters.SCENE_MODE_AUTO.equals(mSceneMode)) {
+            mUI.overrideSettings(CameraSettings.KEY_SHUTTER_SPEED, "0");
+        } else {
+            mUI.overrideSettings(CameraSettings.KEY_SHUTTER_SPEED, null);
+        }
+
         // If scene mode is set, for flash mode, white balance and focus mode
         // read settings from preferences so we retain user preferences.
         if (!Parameters.SCENE_MODE_AUTO.equals(mSceneMode)) {
@@ -2744,6 +2750,12 @@ public class PhotoModule
         mRestartPreview = false;
         String zsl = mPreferences.getString(CameraSettings.KEY_ZSL,
                                   mActivity.getString(R.string.pref_camera_zsl_default));
+        String shutterSpeed = mPreferences.getString(
+                                  CameraSettings.KEY_SHUTTER_SPEED,
+                                  mActivity.getString(R.string.pref_camera_shutter_speed_default));
+        if (!shutterSpeed.equals("0")) {
+            zsl = "off";
+        }
         if(zsl.equals("on") && mSnapshotMode != CameraInfo.CAMERA_SUPPORT_MODE_ZSL
            && mCameraState != PREVIEW_STOPPED) {
             //Switch on ZSL Camera mode
@@ -3164,6 +3176,24 @@ public class PhotoModule
                 });
             }
         }
+
+        // Set manual shutter speed
+        String shutterSpeed = mPreferences.getString(
+                CameraSettings.KEY_SHUTTER_SPEED, null);
+        if (shutterSpeed != null) {
+            mParameters.set(CameraSettings.KEY_EXPOSURE_TIME, shutterSpeed);
+
+            // Disable ZSL for manual exposure
+            if (shutterSpeed.equals("0")) {
+                if (zsl.equals("on")) {
+                    mParameters.set("zsl", "on");
+                }
+            } else {
+                mParameters.set("zsl", "off");
+                zsl = "off";
+            }
+        }
+
         mParameters.setZSLMode(zsl);
         if(zsl.equals("on")) {
             //Switch on ZSL Camera mode
@@ -3204,6 +3234,7 @@ public class PhotoModule
                 mParameters.setFocusMode(mFocusManager.getFocusMode(false));
             }
         }
+
         // Set face detetction parameter.
         String faceDetection = mPreferences.getString(
             CameraSettings.KEY_FACE_DETECTION,
@@ -3569,6 +3600,15 @@ public class PhotoModule
                     CameraSettings.KEY_FLASH_MODE,
                     mActivity.getString(R.string.pref_camera_flashmode_default));
             List<String> supportedFlash = mParameters.getSupportedFlashModes();
+
+            String shutterSpeed = mPreferences.getString(
+                    CameraSettings.KEY_SHUTTER_SPEED,
+                    mActivity.getString(R.string.pref_camera_shutter_speed_default));
+            if (!shutterSpeed.equals("0")) {
+                // Disable flash for manual exposure
+                flashMode = "off";
+            }
+
             if (CameraUtil.isSupported(flashMode, supportedFlash)) {
                 mParameters.setFlashMode(flashMode);
             } else {

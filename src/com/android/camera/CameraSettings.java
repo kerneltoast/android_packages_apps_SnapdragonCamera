@@ -196,6 +196,8 @@ public class CameraSettings {
     public static final String KEY_MANUAL_WB_MODES = "manual-wb-modes";
     public static final String KEY_MANUAL_FOCUS_MODES = "manual-focus-modes";
     //manual exposure
+    public static final String KEY_SHUTTER_SPEED = "pref_camera_shutter_speed_key";
+    //HAL3 manual exposure
     public static final String KEY_MIN_EXPOSURE_TIME = "min-exposure-time";
     public static final String KEY_MAX_EXPOSURE_TIME = "max-exposure-time";
     public static final String KEY_EXPOSURE_TIME = "exposure-time";

@@ -823,5 +823,43 @@
         <item>@string/pref_camera_touchfocus_duration_value_infinity</item>
     </string-array>
 
+    <string-array name="pref_camera_shutter_speed_entries" translatable="false">
+        <item>@string/pref_camera_shutter_speed_entry_off</item>
+        <item>@string/pref_camera_shutter_speed_entry_1_5000th</item>
+        <item>@string/pref_camera_shutter_speed_entry_1_2500th</item>
+        <item>@string/pref_camera_shutter_speed_entry_1_1500th</item>
+        <item>@string/pref_camera_shutter_speed_entry_1_1000th</item>
+        <item>@string/pref_camera_shutter_speed_entry_1_500th</item>
+        <item>@string/pref_camera_shutter_speed_entry_1_250th</item>
+        <item>@string/pref_camera_shutter_speed_entry_1_125th</item>
+        <item>@string/pref_camera_shutter_speed_entry_1_64th</item>
+        <item>@string/pref_camera_shutter_speed_entry_1_32nd</item>
+        <item>@string/pref_camera_shutter_speed_entry_1_16th</item>
+        <item>@string/pref_camera_shutter_speed_entry_1_8th</item>
+        <item>@string/pref_camera_shutter_speed_entry_1_4th</item>
+        <item>@string/pref_camera_shutter_speed_entry_1_2</item>
+        <item>@string/pref_camera_shutter_speed_entry_1</item>
+        <item>@string/pref_camera_shutter_speed_entry_2</item>
+    </string-array>
+
+    <string-array name="pref_camera_shutter_speed_entry_values" translatable="false">
+        <item>@string/pref_camera_shutter_speed_value_off</item>
+        <item>@string/pref_camera_shutter_speed_value_1_5000th</item>
+        <item>@string/pref_camera_shutter_speed_value_1_2500th</item>
+        <item>@string/pref_camera_shutter_speed_value_1_1500th</item>
+        <item>@string/pref_camera_shutter_speed_value_1_1000th</item>
+        <item>@string/pref_camera_shutter_speed_value_1_500th</item>
+        <item>@string/pref_camera_shutter_speed_value_1_250th</item>
+        <item>@string/pref_camera_shutter_speed_value_1_125th</item>
+        <item>@string/pref_camera_shutter_speed_value_1_64th</item>
+        <item>@string/pref_camera_shutter_speed_value_1_32nd</item>
+        <item>@string/pref_camera_shutter_speed_value_1_16th</item>
+        <item>@string/pref_camera_shutter_speed_value_1_8th</item>
+        <item>@string/pref_camera_shutter_speed_value_1_4th</item>
+        <item>@string/pref_camera_shutter_speed_value_1_2</item>
+        <item>@string/pref_camera_shutter_speed_value_1</item>
+        <item>@string/pref_camera_shutter_speed_value_2</item>
+    </string-array>
+
 </resources>
 

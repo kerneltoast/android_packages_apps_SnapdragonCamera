@@ -193,6 +193,7 @@ public class PhotoMenu extends MenuController
                 CameraSettings.KEY_LONGSHOT,
                 CameraSettings.KEY_FACE_DETECTION,
                 CameraSettings.KEY_ISO,
+                CameraSettings.KEY_SHUTTER_SPEED,
                 CameraSettings.KEY_EXPOSURE,
                 CameraSettings.KEY_WHITE_BALANCE,
                 CameraSettings.KEY_FOCUS_MODE,

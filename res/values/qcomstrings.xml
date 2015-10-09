@@ -901,5 +901,43 @@
      <string name="pref_camera_touchfocus_duration_value_10">10</string>
      <string name="pref_camera_touchfocus_duration_value_infinity">0</string>
 
+     <!-- Slow-shutter settings -->
+     <string name="pref_camera_shutter_speed_title">Shutter speed</string>
+     <string name="pref_camera_shutter_speed_default">0</string>
+
+     <string name="pref_camera_shutter_speed_entry_off">Auto</string>
+     <string name="pref_camera_shutter_speed_entry_1_5000th">1/5000 second</string>
+     <string name="pref_camera_shutter_speed_entry_1_2500th">1/2500 second</string>
+     <string name="pref_camera_shutter_speed_entry_1_1500th">1/1500 second</string>
+     <string name="pref_camera_shutter_speed_entry_1_1000th">1/1000 second</string>
+     <string name="pref_camera_shutter_speed_entry_1_500th">1/500 second</string>
+     <string name="pref_camera_shutter_speed_entry_1_250th">1/250 second</string>
+     <string name="pref_camera_shutter_speed_entry_1_125th">1/125 second</string>
+     <string name="pref_camera_shutter_speed_entry_1_64th">1/64 second</string>
+     <string name="pref_camera_shutter_speed_entry_1_32nd">1/32 second</string>
+     <string name="pref_camera_shutter_speed_entry_1_16th">1/16 second</string>
+     <string name="pref_camera_shutter_speed_entry_1_8th">1/8 second</string>
+     <string name="pref_camera_shutter_speed_entry_1_4th">1/4 second</string>
+     <string name="pref_camera_shutter_speed_entry_1_2">1/2 second</string>
+     <string name="pref_camera_shutter_speed_entry_1">1 second</string>
+     <string name="pref_camera_shutter_speed_entry_2">2 seconds</string>
+
+     <string name="pref_camera_shutter_speed_value_off">0</string>
+     <string name="pref_camera_shutter_speed_value_1_5000th">200</string>
+     <string name="pref_camera_shutter_speed_value_1_2500th">400</string>
+     <string name="pref_camera_shutter_speed_value_1_1500th">667</string>
+     <string name="pref_camera_shutter_speed_value_1_1000th">1000</string>
+     <string name="pref_camera_shutter_speed_value_1_500th">2000</string>
+     <string name="pref_camera_shutter_speed_value_1_250th">4000</string>
+     <string name="pref_camera_shutter_speed_value_1_125th">8000</string>
+     <string name="pref_camera_shutter_speed_value_1_64th">15625</string>
+     <string name="pref_camera_shutter_speed_value_1_32nd">31250</string>
+     <string name="pref_camera_shutter_speed_value_1_16th">62500</string>
+     <string name="pref_camera_shutter_speed_value_1_8th">125000</string>
+     <string name="pref_camera_shutter_speed_value_1_4th">250000</string>
+     <string name="pref_camera_shutter_speed_value_1_2">500000</string>
+     <string name="pref_camera_shutter_speed_value_1">1000000</string>
+     <string name="pref_camera_shutter_speed_value_2">2000000</string>
+
 </resources>
 
