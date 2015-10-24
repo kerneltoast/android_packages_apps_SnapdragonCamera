@@ -330,7 +330,7 @@ public class VideoModule implements CameraModule,
     private boolean mUnsupportedHFRVideoSize = false;
     private boolean mUnsupportedHSRVideoSize = false;
     private boolean mUnsupportedHFRVideoCodec = false;
-    private String mDefaultAntibanding = null;
+    private String mDefaultAntibanding = "auto";
     boolean mUnsupportedProfile = false;
     boolean mUnsupportedHDR = false;
 
