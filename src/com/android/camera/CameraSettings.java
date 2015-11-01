@@ -266,10 +266,10 @@ public class CameraSettings {
 
     static {
         //video encoders
-        VIDEO_ENCODER_TABLE.put(MediaRecorder.VideoEncoder.H263, "h263");
+        //VIDEO_ENCODER_TABLE.put(MediaRecorder.VideoEncoder.H263, "h263");
         VIDEO_ENCODER_TABLE.put(MediaRecorder.VideoEncoder.H264, "h264");
         //VIDEO_ENCODER_TABLE.put(MediaRecorder.VideoEncoder.H265, "h265");
-        VIDEO_ENCODER_TABLE.put(MediaRecorder.VideoEncoder.MPEG_4_SP, "m4v");
+        //VIDEO_ENCODER_TABLE.put(MediaRecorder.VideoEncoder.MPEG_4_SP, "m4v");
 
         //video qualities
         VIDEO_QUALITY_TABLE.put("4096x2160", CamcorderProfile.QUALITY_4KDCI);
@@ -790,7 +790,7 @@ public class CameraSettings {
         ListPreference videoHfrMode =
                 group.findPreference(KEY_VIDEO_HIGH_FRAME_RATE);
         ListPreference seeMoreMode = group.findPreference(KEY_SEE_MORE);
-        ListPreference videoEncoder = group.findPreference(KEY_VIDEO_ENCODER);
+        //ListPreference videoEncoder = group.findPreference(KEY_VIDEO_ENCODER);
 
         // Since the screen could be loaded from different resources, we need
         // to check if the preference is available here
@@ -809,9 +809,9 @@ public class CameraSettings {
                    mCameraId,mParameters));
         }
 
-        if (videoEncoder != null) {
-            filterUnsupportedOptions(group, videoEncoder, getSupportedVideoEncoders());
-        }
+        //if (videoEncoder != null) {
+        //    filterUnsupportedOptions(group, videoEncoder, getSupportedVideoEncoders());
+        //}
 
         if (pictureSize != null) {
             filterUnsupportedOptions(group, pictureSize, sizeListToStringList(
@@ -1237,13 +1237,11 @@ public class CameraSettings {
               supported.add(Integer.toString(CamcorderProfile.QUALITY_480P));
            }
         }
-
         if (CamcorderProfile.hasProfile(cameraId, CamcorderProfile.QUALITY_VGA)) {
            if (checkSupportedVideoQuality(parameters,640,480)){
               supported.add(Integer.toString(CamcorderProfile.QUALITY_VGA));
            }
         }
-
         if (CamcorderProfile.hasProfile(cameraId, CamcorderProfile.QUALITY_CIF)) {
            if (checkSupportedVideoQuality(parameters,352,288)){
               supported.add(Integer.toString(CamcorderProfile.QUALITY_CIF));

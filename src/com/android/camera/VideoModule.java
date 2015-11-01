@@ -1476,7 +1476,7 @@ public class VideoModule implements CameraModule,
         mUnsupportedResolution = false;
 
         //check if codec supports the resolution, otherwise throw toast
-        List<VideoEncoderCap> videoEncoders = EncoderCapabilities.getVideoEncoders();
+        /* List<VideoEncoderCap> videoEncoders = EncoderCapabilities.getVideoEncoders();
         for (VideoEncoderCap videoEncoder: videoEncoders) {
             if (videoEncoder.mCodec == mVideoEncoder) {
                 if (videoWidth > videoEncoder.mMaxFrameWidth ||
@@ -1498,7 +1498,7 @@ public class VideoModule implements CameraModule,
                 }
                 break;
             }
-        }
+        } */
 
         long requestedSizeLimit = 0;
         closeVideoFileDescriptor();
