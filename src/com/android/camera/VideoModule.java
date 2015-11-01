@@ -307,7 +307,8 @@ public class VideoModule implements CameraModule,
 
         VIDEO_ENCODER_TABLE.put("h263", MediaRecorder.VideoEncoder.H263);
         VIDEO_ENCODER_TABLE.put("h264", MediaRecorder.VideoEncoder.H264);
-        VIDEO_ENCODER_TABLE.put("h265", MediaRecorder.VideoEncoder.H265);
+//TODO: Add dependency
+//        VIDEO_ENCODER_TABLE.put("h265", MediaRecorder.VideoEncoder.H265);
         VIDEO_ENCODER_TABLE.put("m4v", MediaRecorder.VideoEncoder.MPEG_4_SP);
         VIDEO_ENCODER_TABLE.putDefault(MediaRecorder.VideoEncoder.DEFAULT);
 
@@ -786,7 +787,10 @@ public class VideoModule implements CameraModule,
         if (stop) {
             onStopVideoRecording();
         } else {
-            startVideoRecording();
+            if (!startVideoRecording()) {
+                // Show ui when start recording failed.
+                mUI.showUIafterRecording();
+            }
         }
 
         // Keep the shutter button disabled when in video capture intent
@@ -911,19 +915,34 @@ public class VideoModule implements CameraModule,
                 mActivity.getString(R.string.pref_video_time_lapse_frame_interval_default));
         mTimeBetweenTimeLapseFrameCaptureMs = Integer.parseInt(frameIntervalStr);
         mCaptureTimeLapse = (mTimeBetweenTimeLapseFrameCaptureMs != 0);
-        // TODO: This should be checked instead directly +1000.
-        if (mCaptureTimeLapse) {
-            if (quality == CamcorderProfile.QUALITY_1440P) {
-                quality = CamcorderProfile.QUALITY_TIME_LAPSE_1440P;
-            } else {
-                quality += 1000;
+
+        int hfrRate = 0;
+        String highFrameRate = mPreferences.getString(
+            CameraSettings.KEY_VIDEO_HIGH_FRAME_RATE,
+            mActivity. getString(R.string.pref_camera_hfr_default));
+        if (("hfr".equals(highFrameRate.substring(0,3))) ||
+                ("hsr".equals(highFrameRate.substring(0,3)))) {
+            String rate = highFrameRate.substring(3);
+            Log.i(TAG,"HFR :"  + highFrameRate + " : rate = " + rate);
+            try {
+                hfrRate = Integer.parseInt(rate);
+            } catch (NumberFormatException nfe) {
+                Log.e(TAG, "Invalid hfr rate " + rate);
             }
         }
-        mUnsupportedProfile = false;
-        boolean hasProfile = CamcorderProfile.hasProfile(mCameraId, quality);
-        if (!hasProfile) {
-            mUnsupportedProfile = true;
-            return;
+
+        int mappedQuality = quality;
+        if (mCaptureTimeLapse) {
+            mappedQuality = CameraSettings.getTimeLapseQualityFor(quality);
+        } else if (hfrRate > 0) {
+            mappedQuality = CameraSettings.getHighSpeedQualityFor(quality);
+            Log.i(TAG,"NOTE: HighSpeed quality (" + mappedQuality + ") for (" + quality + ")");
+        }
+
+        if (CamcorderProfile.hasProfile(mCameraId, mappedQuality)) {
+            quality = mappedQuality;
+        } else {
+            Log.e(TAG,"NOTE: Quality " + mappedQuality + " is not supported ! Will use " + quality);
         }
         mProfile = CamcorderProfile.get(mCameraId, quality);
         getDesiredPreviewSize();
@@ -941,7 +960,7 @@ public class VideoModule implements CameraModule,
 
     private boolean is4KEnabled() {
        if (mProfile.quality == CamcorderProfile.QUALITY_2160P ||
-           mProfile.quality == CamcorderProfile.QUALITY_4kDCI) {
+           mProfile.quality == CamcorderProfile.QUALITY_4KDCI) {
            return true;
        } else {
            return false;
@@ -963,6 +982,32 @@ public class VideoModule implements CameraModule,
            return false;
        }
     }
+
+    private boolean isSessionSupportedByEncoder(int w, int h, int fps) {
+        int expectedMBsPerSec = w * h * fps;
+        List<VideoEncoderCap> videoEncoders = EncoderCapabilities.getVideoEncoders();
+        for (VideoEncoderCap videoEncoder: videoEncoders) {
+            if (videoEncoder.mCodec == mVideoEncoder) {
+                int maxMBsPerSec = (videoEncoder.mMaxFrameWidth * videoEncoder.mMaxFrameHeight
+                        * videoEncoder.mMaxFrameRate);
+                if (expectedMBsPerSec > maxMBsPerSec) {
+                    Log.e(TAG,"Selected codec " + mVideoEncoder
+                            + " does not support width(" + w
+                            + ") X height ("+ h
+                            + "@ " + fps +" fps");
+                    Log.e(TAG, "Max capabilities: " +
+                            "MaxFrameWidth = " + videoEncoder.mMaxFrameWidth + " , " +
+                            "MaxFrameHeight = " + videoEncoder.mMaxFrameHeight + " , " +
+                            "MaxFrameRate = " + videoEncoder.mMaxFrameRate);
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
 
     boolean isHFREnabled(int videoWidth, int videoHeight) {
         if ((null == mPreferences) || (null == mParameters)) {
@@ -998,23 +1043,7 @@ public class VideoModule implements CameraModule,
             }
 
             int hfrFps = Integer.parseInt(HighFrameRate.substring(3));
-            int inputBitrate = videoWidth * videoHeight * hfrFps;
-
-            boolean supported = false;
-            List<VideoEncoderCap> videoEncoders = EncoderCapabilities.getVideoEncoders();
-            for (VideoEncoderCap videoEncoder: videoEncoders) {
-                if (videoEncoder.mCodec == mVideoEncoder) {
-                    int maxBitrate = (videoEncoder.mMaxHFRFrameWidth *
-                                     videoEncoder.mMaxHFRFrameHeight *
-                                     videoEncoder.mMaxHFRMode);
-                    if (inputBitrate > 0 && inputBitrate <= maxBitrate ) {
-                        supported = true;
-                    }
-                    break;
-                }
-            }
-
-            return supported;
+            return isSessionSupportedByEncoder(videoWidth, videoHeight, hfrFps);
         }
 
         return false;
@@ -1494,24 +1523,57 @@ public class VideoModule implements CameraModule,
         mCameraDevice.unlock();
         mMediaRecorder.setCamera(mCameraDevice.getCamera());
         String hfr = mParameters.getVideoHighFrameRate();
-        if (!mCaptureTimeLapse && ((hfr == null) || ("off".equals(hfr)))) {
-            mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.CAMCORDER);
-            mProfile.audioCodec = mAudioEncoder;
-        } else {
-            mProfile.audioCodec = -1; //not set
+        String hsr = mParameters.get(CameraSettings.KEY_VIDEO_HSR);
+        Log.i(TAG,"NOTE: hfr = " + hfr + " : hsr = " + hsr);
+
+        int captureRate = 0;
+        boolean isHFR = (hfr != null && !hfr.equals("off"));
+        boolean isHSR = (hsr != null && !hsr.equals("off"));
+        try {
+            captureRate = isHFR ? Integer.parseInt(hfr) :
+                    isHSR ? Integer.parseInt(hsr) : 0;
+        } catch (NumberFormatException nfe) {
+            Log.e(TAG, "Invalid hfr(" + hfr + ") or hsr(" + hsr + ")");
         }
 
         mMediaRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
 
         mProfile.videoCodec = mVideoEncoder;
+        mProfile.audioCodec = mAudioEncoder;
         mProfile.duration = mMaxVideoDurationInMs;
 
-        mMediaRecorder.setProfile(mProfile);
+        // Set params individually for HFR case, as we do not want to encode audio
+        if ((isHFR || isHSR) && captureRate > 0) {
+            mMediaRecorder.setOutputFormat(mProfile.fileFormat);
+            mMediaRecorder.setVideoFrameRate(mProfile.videoFrameRate);
+            mMediaRecorder.setVideoEncodingBitRate(mProfile.videoBitRate);
+            mMediaRecorder.setVideoEncoder(mProfile.videoCodec);
+        } else {
+            if (!mCaptureTimeLapse) {
+                mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.CAMCORDER);
+            }
+
+            mMediaRecorder.setProfile(mProfile);
+        }
         mMediaRecorder.setVideoSize(mProfile.videoFrameWidth, mProfile.videoFrameHeight);
         mMediaRecorder.setMaxDuration(mMaxVideoDurationInMs);
         if (mCaptureTimeLapse) {
             double fps = 1000 / (double) mTimeBetweenTimeLapseFrameCaptureMs;
             setCaptureRate(mMediaRecorder, fps);
+        } else if (captureRate > 0) {
+            Log.i(TAG, "Setting capture-rate = " + captureRate);
+            mMediaRecorder.setCaptureRate(captureRate);
+            // for HFR, encoder's target-framerate = capture-rate
+            if (isHSR) {
+                Log.i(TAG, "Setting fps = " + captureRate + " for HSR");
+                mMediaRecorder.setVideoFrameRate(captureRate);
+            }
+            // for HFR, encoder's taget-framerate = 30fps (from profile)
+            if (isHFR) {
+                Log.i(TAG, "Setting fps = 30 for HFR");
+                mMediaRecorder.setVideoFrameRate(30);
+            }
+            // TODO : bitrate correction..check with google
         }
 
         setRecordLocation();
@@ -1735,7 +1797,7 @@ public class VideoModule implements CameraModule,
         return mMediaRecorderRecording;
     }
 
-    private void startVideoRecording() {
+    private boolean startVideoRecording() {
         Log.v(TAG, "startVideoRecording");
         mStartRecPending = true;
         mUI.cancelAnimations();
@@ -1745,7 +1807,7 @@ public class VideoModule implements CameraModule,
         if (mActivity.getStorageSpaceBytes() <= Storage.LOW_STORAGE_THRESHOLD_BYTES) {
             Log.v(TAG, "Storage issue, ignore the start request");
             mStartRecPending = false;
-            return;
+            return false;
         }
 
         if( mUnsupportedHFRVideoSize == true) {
@@ -1753,7 +1815,7 @@ public class VideoModule implements CameraModule,
             RotateTextToast.makeText(mActivity,R.string.error_app_unsupported_hfr,
                     Toast.LENGTH_LONG).show();
             mStartRecPending = false;
-            return;
+            return false;
         }
 
         if (mUnsupportedHSRVideoSize == true) {
@@ -1761,7 +1823,7 @@ public class VideoModule implements CameraModule,
             RotateTextToast.makeText(mActivity,R.string.error_app_unsupported_hsr,
                     Toast.LENGTH_SHORT).show();
             mStartRecPending = false;
-            return;
+            return false;
         }
 
         if( mUnsupportedHFRVideoCodec == true) {
@@ -1769,14 +1831,14 @@ public class VideoModule implements CameraModule,
             RotateTextToast.makeText(mActivity, R.string.error_app_unsupported_hfr_codec,
                     Toast.LENGTH_SHORT).show();
             mStartRecPending = false;
-            return;
+            return false;
         }
         if (mUnsupportedProfile == true) {
             Log.e(TAG, "Unsupported video profile");
             RotateTextToast.makeText(mActivity, R.string.error_app_unsupported_profile,
                     Toast.LENGTH_SHORT).show();
             mStartRecPending = false;
-            return;
+            return false;
         }
 
         if (mUnsupportedHDR == true) {
@@ -1795,12 +1857,12 @@ public class VideoModule implements CameraModule,
         if (mUnsupportedResolution == true) {
               Log.v(TAG, "Unsupported Resolution according to target");
               mStartRecPending = false;
-              return;
+              return false;
         }
         if (mMediaRecorder == null) {
             Log.e(TAG, "Fail to initialize media recorder");
             mStartRecPending = false;
-            return;
+            return false;
         }
 
         pauseAudioPlayback();
@@ -1813,7 +1875,7 @@ public class VideoModule implements CameraModule,
             // If start fails, frameworks will not lock the camera for us.
             mCameraDevice.lock();
             mStartRecPending = false;
-            return;
+            return false;
         }
 
         mUI.hideUIwhileRecording();
@@ -1846,6 +1908,7 @@ public class VideoModule implements CameraModule,
         UsageStatistics.onEvent(UsageStatistics.COMPONENT_CAMERA,
                 UsageStatistics.ACTION_CAPTURE_START, "Video");
         mStartRecPending = false;
+        return true;
     }
 
     private Bitmap getVideoThumbnail() {
@@ -2171,6 +2234,7 @@ public class VideoModule implements CameraModule,
      private void qcomSetCameraParameters(){
         // add QCOM Parameters here
         // Set color effect parameter.
+        Log.i(TAG,"NOTE: qcomSetCameraParameters " + videoWidth + " x " + videoHeight);
         String colorEffect = mPreferences.getString(
             CameraSettings.KEY_COLOR_EFFECT,
             mActivity.getString(R.string.pref_camera_coloreffect_default));
@@ -2254,16 +2318,18 @@ public class VideoModule implements CameraModule,
         String HighFrameRate = mPreferences.getString(
             CameraSettings.KEY_VIDEO_HIGH_FRAME_RATE,
             mActivity. getString(R.string.pref_camera_hfr_default));
-        if (("hfr".equals(HighFrameRate.substring(0,3))) ||
-                ("hsr".equals(HighFrameRate.substring(0,3)))) {
+        boolean isHFR = "hfr".equals(HighFrameRate.substring(0,3));
+        boolean isHSR = "hsr".equals(HighFrameRate.substring(0,3));
+
+        if (isHFR || isHSR) {
             String hfrRate = HighFrameRate.substring(3);
-            if ("hfr".equals(HighFrameRate.substring(0,3))) {
+            if (isHFR) {
                 mUnsupportedHFRVideoSize = true;
             } else {
                 mUnsupportedHSRVideoSize = true;
             }
             String hfrsize = videoWidth+"x"+videoHeight;
-            Log.v(TAG, "current set resolution is : "+hfrsize);
+            Log.v(TAG, "current set resolution is : "+hfrsize+ " : Rate is : " + hfrRate );
             try {
                 Size size = null;
                 if (isSupported(hfrRate, mParameters.getSupportedVideoHighFrameRateModes())) {
@@ -2273,7 +2339,7 @@ public class VideoModule implements CameraModule,
                 }
                 if (size != null) {
                     if (videoWidth <= size.width && videoHeight <= size.height) {
-                        if ("hfr".equals(HighFrameRate.substring(0,3))) {
+                        if (isHFR) {
                             mUnsupportedHFRVideoSize = false;
                         } else {
                             mUnsupportedHSRVideoSize = false;
@@ -2286,33 +2352,14 @@ public class VideoModule implements CameraModule,
             }
 
             int hfrFps = Integer.parseInt(hfrRate);
-            int inputBitrate = videoWidth*videoHeight*hfrFps;
-
-            //check if codec supports the resolution, otherwise throw toast
-            List<VideoEncoderCap> videoEncoders = EncoderCapabilities.getVideoEncoders();
-            for (VideoEncoderCap videoEncoder: videoEncoders) {
-                if (videoEncoder.mCodec == mVideoEncoder){
-                    int maxBitrate = (videoEncoder.mMaxHFRFrameWidth *
-                                     videoEncoder.mMaxHFRFrameHeight *
-                                     videoEncoder.mMaxHFRMode);
-                    if (inputBitrate > maxBitrate ) {
-                        Log.e(TAG,"Selected codec "+mVideoEncoder+
-                                " does not support HFR " + HighFrameRate + " with "+ videoWidth
-                                + "x" + videoHeight +" resolution");
-                        Log.e(TAG, "Codec capabilities: " +
-                                "mMaxHFRFrameWidth = " + videoEncoder.mMaxHFRFrameWidth + " , " +
-                                "mMaxHFRFrameHeight = " + videoEncoder.mMaxHFRFrameHeight + " , " +
-                                "mMaxHFRMode = " + videoEncoder.mMaxHFRMode);
-                        if ("hfr".equals(HighFrameRate.substring(0,3))) {
-                            mUnsupportedHFRVideoSize = true;
-                        } else {
-                            mUnsupportedHSRVideoSize = true;
-                        }
-                    }
-                    break;
+            if (!isSessionSupportedByEncoder(videoWidth, videoHeight, hfrFps)) {
+                if (isHFR) {
+                    mUnsupportedHFRVideoSize = true;
+                } else {
+                    mUnsupportedHSRVideoSize = true;
                 }
             }
-            if ("hfr".equals(HighFrameRate.substring(0,3))) {
+            if (isHFR) {
                 mParameters.set(CameraSettings.KEY_VIDEO_HSR, "off");
                 if (mUnsupportedHFRVideoSize) {
                     mParameters.setVideoHighFrameRate("off");
@@ -2486,6 +2533,8 @@ public class VideoModule implements CameraModule,
         forceFlashOffIfSupported(!mPreviewFocused);
         videoWidth = mProfile.videoFrameWidth;
         videoHeight = mProfile.videoFrameHeight;
+
+        Log.i(TAG,"NOTE: SetCameraParameters " + videoWidth + " x " + videoHeight);
         String recordSize = videoWidth + "x" + videoHeight;
         Log.e(TAG,"Video dimension in App->"+recordSize);
         mParameters.set("video-size", recordSize);

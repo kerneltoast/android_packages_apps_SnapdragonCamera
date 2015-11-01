@@ -148,6 +148,7 @@ public class PhotoModule
     private static final int SET_PHOTO_UI_PARAMS = 11;
     private static final int SWITCH_TO_GCAM_MODULE = 12;
     private static final int ON_PREVIEW_STARTED = 13;
+    private static final int UPDATE_GESTURES_UI = 14;
 
     // The subset of parameters we need to update in setCameraParameters().
     private static final int UPDATE_PARAM_INITIALIZE = 1;
@@ -483,6 +484,11 @@ public class PhotoModule
                     onPreviewStarted();
                     break;
                 }
+
+                case UPDATE_GESTURES_UI: {
+                    updateGesturesUI();
+                    break;
+                }
             }
         }
     }
@@ -545,7 +551,6 @@ public class PhotoModule
             return;
         }
         mUI.hidePreviewCover();
-        setCameraState(IDLE);
         mFocusManager.onPreviewStarted();
         startFaceDetection();
         locationFirstRun();
@@ -1498,7 +1503,20 @@ public class PhotoModule
 
     private void setCameraState(int state) {
         mCameraState = state;
-        switch (state) {
+        /*
+         * If the current thread is UI thread, update gestures UI directly.
+         * If the current thread is background thread, post a handler message
+         * to update gestures UI.
+         */
+        if (Looper.getMainLooper().getThread() == Thread.currentThread()) {
+            updateGesturesUI();
+        } else {
+            mHandler.sendEmptyMessage(UPDATE_GESTURES_UI);
+        }
+    }
+
+    private void updateGesturesUI(){
+        switch (mCameraState) {
             case PhotoController.PREVIEW_STOPPED:
             case PhotoController.SNAPSHOT_IN_PROGRESS:
             case PhotoController.LONGSHOT:
@@ -2687,6 +2705,7 @@ public class PhotoModule
         setCameraParameters(UPDATE_PARAM_ALL);
 
         mCameraDevice.startPreview();
+        setCameraState(IDLE);
         mHandler.sendEmptyMessage(ON_PREVIEW_STARTED);
 
         setDisplayOrientation();

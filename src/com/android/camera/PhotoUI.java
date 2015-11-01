@@ -386,14 +386,14 @@ public class PhotoUI implements PieListener,
                 if (width > height) {
                     if(Math.max(width, height * mAspectRatio) > width) {
                         scaledTextureWidth = width;
-                        scaledTextureHeight = width / mAspectRatio;
+                        scaledTextureHeight = height;
                     } else {
                         scaledTextureWidth = height * mAspectRatio;
                         scaledTextureHeight = height;
                     }
                 } else {
                     if(Math.max(height, width * mAspectRatio) > height) {
-                        scaledTextureWidth = height / mAspectRatio;
+                        scaledTextureWidth = width;
                         scaledTextureHeight = height;
                     } else {
                         scaledTextureWidth = width;
@@ -549,6 +549,7 @@ public class PhotoUI implements PieListener,
         });
         if (mController.isImageCaptureIntent()) {
             hideSwitcher();
+            mSwitcher.setSwitcherVisibility(false);
             ViewGroup cameraControls = (ViewGroup) mRootView.findViewById(R.id.camera_controls);
             mActivity.getLayoutInflater().inflate(R.layout.review_module_control, cameraControls);
 
@@ -1000,6 +1001,7 @@ public class PhotoUI implements PieListener,
     }
 
     protected void showCapturedImageForReview(byte[] jpegData, int orientation, boolean mirror) {
+        mCameraControls.hideCameraSettings();
         mDecodeTaskForReview = new DecodeImageForReview(jpegData, orientation, mirror);
         mDecodeTaskForReview.execute();
         mOnScreenIndicators.setVisibility(View.GONE);
@@ -1011,6 +1013,7 @@ public class PhotoUI implements PieListener,
     }
 
     protected void hidePostCaptureAlert() {
+        mCameraControls.showCameraSettings();
         if (mDecodeTaskForReview != null) {
             mDecodeTaskForReview.cancel(true);
         }
