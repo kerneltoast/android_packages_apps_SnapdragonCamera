@@ -302,6 +302,7 @@ public class CameraSettings {
         VIDEO_QUALITY_TO_TIMELAPSE.put(CamcorderProfile.QUALITY_2160P, CamcorderProfile.QUALITY_TIME_LAPSE_2160P);
         VIDEO_QUALITY_TO_TIMELAPSE.put(CamcorderProfile.QUALITY_VGA  , CamcorderProfile.QUALITY_TIME_LAPSE_VGA  );
         VIDEO_QUALITY_TO_TIMELAPSE.put(CamcorderProfile.QUALITY_4KDCI, CamcorderProfile.QUALITY_TIME_LAPSE_4KDCI);
+        VIDEO_QUALITY_TO_TIMELAPSE.put(CamcorderProfile.QUALITY_1440P, CamcorderProfile.QUALITY_TIME_LAPSE_1440P);
    }
 
    public static int getTimeLapseQualityFor(int quality) {
