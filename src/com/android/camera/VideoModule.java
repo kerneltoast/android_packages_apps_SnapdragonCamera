@@ -882,7 +882,7 @@ public class VideoModule implements CameraModule,
             mParameters = mCameraDevice.getParameters();
             String defaultQuality = mActivity.getResources().getString(
                     R.string.pref_video_quality_default);
-            if (!defaultQuality.equals("")){
+            if (!defaultQuality.equals("") && mCameraId == 0){
                 videoQuality = defaultQuality;
             } else {
             // check for highest quality supported
