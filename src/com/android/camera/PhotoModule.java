@@ -258,8 +258,6 @@ public class PhotoModule
 
     private boolean mShutterPressing = false;
 
-    private int mZslSavedSetting = 0;
-
     private Runnable mDoSnapRunnable = new Runnable() {
         @Override
         public void run() {
@@ -1793,7 +1791,8 @@ public class PhotoModule
         }
 
         if (!Parameters.SCENE_MODE_AUTO.equals(mSceneMode)) {
-            mUI.overrideSettings(CameraSettings.KEY_SHUTTER_SPEED, "0");
+            mUI.overrideSettings(CameraSettings.KEY_SHUTTER_SPEED,
+                mPreferences.getString(CameraSettings.KEY_SHUTTER_SPEED, "0"));
         } else {
             mUI.overrideSettings(CameraSettings.KEY_SHUTTER_SPEED, null);
         }
@@ -1819,7 +1818,8 @@ public class PhotoModule
                     sceneMode, redeyeReduction, aeBracketing);
             if (CameraUtil.SCENE_MODE_HDR.equals(mSceneMode)) {
                 disableLongShot = true;
-                mUI.overrideSettings(CameraSettings.KEY_ZSL, "off");
+                mUI.overrideSettings(CameraSettings.KEY_ZSL,
+                    mPreferences.getString(CameraSettings.KEY_ZSL, "off"));
             }
         } else if (mFocusManager.isZslEnabled()) {
             focusMode = mParameters.getFocusMode();
@@ -2754,7 +2754,7 @@ public class PhotoModule
         String shutterSpeed = mPreferences.getString(
                                   CameraSettings.KEY_SHUTTER_SPEED,
                                   mActivity.getString(R.string.pref_camera_shutter_speed_default));
-        if (!shutterSpeed.equals("0")) {
+        if (!shutterSpeed.equals("0") || CameraUtil.SCENE_MODE_HDR.equals(mSceneMode)) {
             zsl = "off";
         }
         if(zsl.equals("on") && mSnapshotMode != CameraInfo.CAMERA_SUPPORT_MODE_ZSL
@@ -3178,6 +3178,12 @@ public class PhotoModule
             }
         }
 
+        // Disable ZSL for HDR
+        if (CameraUtil.SCENE_MODE_HDR.equals(mSceneMode)) {
+            mParameters.set("zsl", "off");
+            zsl = "off";
+        }
+
         // Set manual shutter speed
         String shutterSpeed = mPreferences.getString(
                 CameraSettings.KEY_SHUTTER_SPEED, null);
@@ -3302,7 +3308,7 @@ public class PhotoModule
                 CameraSettings.KEY_TOUCH_FOCUS_DURATION, null);
         if (touchFocusDuration != null) {
             if (touchFocusDuration.equals("0")) {
-                mFocusManager.setTouchFocusDuration(2147483647);
+                mFocusManager.setTouchFocusDuration(0x7FFFFFFF);
             } else if (touchFocusDuration.equals("3")) {
                 mFocusManager.setTouchFocusDuration(3000);
             } else if (touchFocusDuration.equals("5")) {
@@ -4214,28 +4220,6 @@ public class PhotoModule
     public void onSharedPreferenceChanged(ListPreference pref) {
         // ignore the events after "onPause()"
         if (mPaused) return;
-
-        //filter off unsupported settings
-        final String settingOff = mActivity.getString(R.string.setting_off_value);
-        final String settingOn = mActivity.getString(R.string.setting_on_value);
-        if (!CameraSettings.isZSLHDRSupported(mParameters)) {
-            //HDR internally uses AE-bracketing. Disable both if not supported.
-            if (notSame(pref, CameraSettings.KEY_CAMERA_HDR, settingOff) ||
-                notSame(pref, CameraSettings.KEY_AE_BRACKET_HDR, settingOff)) {
-                ListPreference zslPref = mPreferenceGroup.findPreference(CameraSettings.KEY_ZSL);
-                mZslSavedSetting = zslPref.getValue().equals("on") ? 1 : 0;
-                mUI.setPreference(CameraSettings.KEY_ZSL,settingOff);
-            } else if (notSame(pref,CameraSettings.KEY_ZSL,settingOff)) {
-                mZslSavedSetting = 1;
-                mUI.setPreference(CameraSettings.KEY_CAMERA_HDR, settingOff);
-                mUI.setPreference(CameraSettings.KEY_AE_BRACKET_HDR, settingOff);
-            } else if (notSame(pref, CameraSettings.KEY_CAMERA_HDR, settingOn) ||
-                notSame(pref, CameraSettings.KEY_AE_BRACKET_HDR, settingOn)) {
-                if (mZslSavedSetting == 1) {
-                    mUI.setPreference(CameraSettings.KEY_ZSL,settingOn);
-                }
-            }
-        }
 
         if(CameraSettings.KEY_MANUAL_EXPOSURE.equals(pref.getKey())) {
             UpdateManualExposureSettings();

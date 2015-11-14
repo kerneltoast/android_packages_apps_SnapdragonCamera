@@ -2458,7 +2458,7 @@ public class VideoModule implements CameraModule,
                 CameraSettings.KEY_TOUCH_FOCUS_DURATION, null);
         if (touchFocusDuration != null) {
             if (touchFocusDuration.equals("0")) {
-                mFocusManager.setTouchFocusDuration(2147483647);
+                mFocusManager.setTouchFocusDuration(0x7FFFFFFF);
             } else if (touchFocusDuration.equals("3")) {
                 mFocusManager.setTouchFocusDuration(3000);
             } else if (touchFocusDuration.equals("5")) {
