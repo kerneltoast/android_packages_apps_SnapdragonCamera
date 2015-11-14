@@ -1549,11 +1549,11 @@ public class VideoModule implements CameraModule,
             mMediaRecorder.setVideoFrameRate(mProfile.videoFrameRate);
             mMediaRecorder.setVideoEncodingBitRate(mProfile.videoBitRate);
             mMediaRecorder.setVideoEncoder(mProfile.videoCodec);
-        } else if (isHSR) {
-            mProfile.videoBitRate *= captureRate / 30;
-            mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.CAMCORDER);
-            mMediaRecorder.setProfile(mProfile);
         } else {
+            if (isHSR) {
+                mProfile.videoBitRate *= captureRate / 30;
+            }
+
             mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.CAMCORDER);
             mMediaRecorder.setProfile(mProfile);
         }
@@ -2507,7 +2507,7 @@ public class VideoModule implements CameraModule,
                 CameraSettings.KEY_TOUCH_FOCUS_DURATION, null);
         if (touchFocusDuration != null) {
             if (touchFocusDuration.equals("0")) {
-                mFocusManager.setTouchFocusDuration(2147483647);
+                mFocusManager.setTouchFocusDuration(0x7FFFFFFF);
             } else if (touchFocusDuration.equals("3")) {
                 mFocusManager.setTouchFocusDuration(3000);
             } else if (touchFocusDuration.equals("5")) {
