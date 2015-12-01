@@ -163,20 +163,20 @@
 
     <!-- Camera Preferences Picture size dialog box entries -->
     <string-array name="pref_camera_picturesize_entries" translatable="false">
-        <item>(4:3) 13.1MP</item>
-        <item>(4:3) 13MP</item>
-        <item>(4:3) 12MP</item>
-        <item>(4:3) 7.7MP</item>
-        <item>(4:3) 5MP</item>
-        <item>(4:3) 3.1MP</item>
-        <item>(4:3) 1.9MP</item>
-        <item>(4:3) 1.2MP</item>
-        <item>(16:9) 9.7MP</item>
-        <item>(16:9) 5.8MP</item>
-        <item>(16:9) 2.1MP</item>
-        <item>(16:9) 0.9MP</item>
-        <item>(Wide) 8.8MP</item>
-        <item>(5:3) 1MP</item>
+        <item>(4:3) 13.1 MP</item>
+        <item>(4:3) 13 MP</item>
+        <item>(4:3) 12 MP</item>
+        <item>(4:3) 7.7 MP</item>
+        <item>(4:3) 5 MP</item>
+        <item>(4:3) 3.1 MP</item>
+        <item>(4:3) 1.9 MP</item>
+        <item>(4:3) 1.2 MP</item>
+        <item>(16:9) 9.7 MP</item>
+        <item>(16:9) 5.8 MP</item>
+        <item>(16:9) 2.1 MP</item>
+        <item>(16:9) 0.9 MP</item>
+        <item>(Wide) 8.8 MP</item>
+        <item>(5:3) 1 MP</item>
     </string-array>
     <!-- When launching the camera app first time, we will set the picture
          size to the first one in the list that is also supported by the
