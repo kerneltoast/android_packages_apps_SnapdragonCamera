@@ -223,7 +223,7 @@
     <!-- Entry of camera save path -->
     <string name="pref_camera_savepath_title">Storage location</string>
     <string name="pref_camera_savepath_default">0</string>
-    <string name="pref_camera_savepath_entry_0">Internal Storage</string>
+    <string name="pref_camera_savepath_entry_0">Internal storage</string>
     <string name="pref_camera_savepath_entry_1">USB OTG drive</string>
 
     <!-- Entry of a on/off setting. The setting is turned off. [CHAR LIMIT=15] -->
