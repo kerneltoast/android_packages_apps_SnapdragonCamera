@@ -880,17 +880,19 @@
 
      <!-- Touch-focus duration settings -->
      <string name="pref_camera_touchfocus_duration_title">Tap-to-focus duration</string>
-     <string name="pref_camera_touchfocus_duration_default">3</string>
+     <string name="pref_camera_touchfocus_duration_default">0</string>
 
+     <string name="pref_camera_touchfocus_duration_entry_0">0 seconds</string>
      <string name="pref_camera_touchfocus_duration_entry_3">3 seconds</string>
      <string name="pref_camera_touchfocus_duration_entry_5">5 seconds</string>
      <string name="pref_camera_touchfocus_duration_entry_10">10 seconds</string>
      <string name="pref_camera_touchfocus_duration_entry_infinity">Infinity</string>
 
+     <string name="pref_camera_touchfocus_duration_value_0">0</string>
      <string name="pref_camera_touchfocus_duration_value_3">3</string>
      <string name="pref_camera_touchfocus_duration_value_5">5</string>
      <string name="pref_camera_touchfocus_duration_value_10">10</string>
-     <string name="pref_camera_touchfocus_duration_value_infinity">0</string>
+     <string name="pref_camera_touchfocus_duration_value_infinity">0x7FFFFFFF</string>
 
      <!-- Slow-shutter settings -->
      <string name="pref_camera_shutter_speed_title">Shutter speed</string>
