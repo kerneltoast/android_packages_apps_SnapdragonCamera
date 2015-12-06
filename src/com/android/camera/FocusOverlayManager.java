@@ -60,6 +60,7 @@ public class FocusOverlayManager {
     private static final String TAG = "CAM_FocusManager";
 
     private static final int RESET_TOUCH_FOCUS = 0;
+    private boolean mTouchFocusAeLock = false;
     private int mTouchFocusDuration = 3000;
 
     private int mState = STATE_IDLE;
@@ -280,8 +281,10 @@ public class FocusOverlayManager {
             if (focused) {
                 mState = STATE_SUCCESS;
                 // Lock exposure and white balance
-                setAeAwbLock(true);
-                mListener.setFocusParameters();
+                if (mTouchFocusAeLock) {
+                    setAeAwbLock(true);
+                    mListener.setFocusParameters();
+                }
             } else {
                 mState = STATE_FAIL;
             }
@@ -294,8 +297,10 @@ public class FocusOverlayManager {
             if (focused) {
                 mState = STATE_SUCCESS;
                 // Lock exposure and white balance
-                setAeAwbLock(true);
-                mListener.setFocusParameters();
+                if (mTouchFocusAeLock) {
+                    setAeAwbLock(true);
+                    mListener.setFocusParameters();
+                }
             } else {
                 mState = STATE_FAIL;
             }
@@ -372,6 +377,10 @@ public class FocusOverlayManager {
         mMeteringArea = null;
     }
 
+    public void setTouchFocusAeLock(boolean aeLock) {
+        mTouchFocusAeLock = aeLock;
+    }
+
     public void setTouchFocusDuration(int duration) {
         mTouchFocusDuration = duration;
     }
@@ -407,6 +416,11 @@ public class FocusOverlayManager {
 
         // Stop face detection because we want to specify focus and metering area.
         mListener.stopFaceDetection();
+
+        if (!mTouchFocusAeLock) {
+            setAeAwbLock(true);
+            mListener.setFocusParameters();
+        }
 
         // Set the focus area and metering area.
         mListener.setFocusParameters();
