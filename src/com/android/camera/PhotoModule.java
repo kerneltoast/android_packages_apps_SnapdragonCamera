@@ -3324,25 +3324,24 @@ public class PhotoModule
 
         // Set touch-focus duration
         String touchFocusDuration = mPreferences.getString(
-                CameraSettings.KEY_TOUCH_FOCUS_DURATION, null);
-        if (touchFocusDuration != null) {
-            if (touchFocusDuration.equals("0")) {
-                mFocusManager.setTouchFocusDuration(200);
-            } else if (touchFocusDuration.equals("3")) {
-                mFocusManager.setTouchFocusDuration(3000);
-            } else if (touchFocusDuration.equals("5")) {
-                mFocusManager.setTouchFocusDuration(5000);
-            } else if (touchFocusDuration.equals("10")) {
-                mFocusManager.setTouchFocusDuration(10000);
-            } else if (touchFocusDuration.equals("0x7FFFFFFF")) {
-                mFocusManager.setTouchFocusDuration(0x7FFFFFFF);
-            }
+                CameraSettings.KEY_TOUCH_FOCUS_DURATION,
+                mActivity.getString(R.string.pref_camera_touchfocus_duration_default));
+        if (touchFocusDuration.equals("0")) {
+            mFocusManager.setTouchFocusDuration(200);
+        } else if (touchFocusDuration.equals("3")) {
+            mFocusManager.setTouchFocusDuration(3000);
+        } else if (touchFocusDuration.equals("5")) {
+            mFocusManager.setTouchFocusDuration(5000);
+        } else if (touchFocusDuration.equals("10")) {
+            mFocusManager.setTouchFocusDuration(10000);
+        } else if (touchFocusDuration.equals("0x7FFFFFFF")) {
+            mFocusManager.setTouchFocusDuration(0x7FFFFFFF);
+        }
 
-            if (touchFocusDuration.equals("0")) {
-                mFocusManager.setTouchFocusAeLock(false);
-            } else {
-                mFocusManager.setTouchFocusAeLock(true);
-            }
+        if (touchFocusDuration.equals("0")) {
+            mFocusManager.setTouchFocusAeLock(false);
+        } else {
+            mFocusManager.setTouchFocusAeLock(true);
         }
     }
 

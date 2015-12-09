@@ -880,7 +880,8 @@
 
      <!-- Touch-focus duration settings -->
      <string name="pref_camera_touchfocus_duration_title">Tap-to-focus duration</string>
-     <string name="pref_camera_touchfocus_duration_default">0</string>
+     <string name="pref_camera_touchfocus_duration_default">3</string>
+     <string name="pref_video_touchfocus_duration_default">0</string>
 
      <string name="pref_camera_touchfocus_duration_entry_0">0 seconds</string>
      <string name="pref_camera_touchfocus_duration_entry_3">3 seconds</string>

@@ -242,6 +242,7 @@ public class CameraSettings {
     public static final String KEY_TS_MAKEUP_LEVEL_CLEAN   = "pref_camera_tsmakeup_clean";
 
     public static final String KEY_TOUCH_FOCUS_DURATION = "pref_camera_touchfocus_duration_key";
+    public static final String KEY_VIDEO_TOUCH_FOCUS_DURATION = "pref_video_touchfocus_duration_key";
 
     public static final String EXPOSURE_DEFAULT_VALUE = "0";
 
