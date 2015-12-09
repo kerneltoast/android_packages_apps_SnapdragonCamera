@@ -171,8 +171,8 @@
             camera:entries="@array/pref_video_focusmode_entries"
             camera:entryValues="@array/pref_video_focusmode_entryvalues" />
     <ListPreference
-            camera:key="pref_camera_touchfocus_duration_key"
-            camera:defaultValue="@string/pref_camera_touchfocus_duration_default"
+            camera:key="pref_video_touchfocus_duration_key"
+            camera:defaultValue="@string/pref_video_touchfocus_duration_default"
             camera:title="@string/pref_camera_touchfocus_duration_title"
             camera:entries="@array/pref_camera_touchfocus_duration_entries"
             camera:entryValues="@array/pref_camera_touchfocus_duration_entry_values" />
