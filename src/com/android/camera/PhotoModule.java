@@ -1241,6 +1241,9 @@ public class PhotoModule
                     && (mSnapshotMode != CameraInfo.CAMERA_SUPPORT_MODE_ZSL)
                     && ((mReceivedSnapNum == mBurstSnapNum) && (mCameraState != LONGSHOT));
             needRestartPreview |= (isLongshotDone() && !mFocusManager.isZslEnabled());
+            needRestartPreview |= ((mReceivedSnapNum == mBurstSnapNum) &&
+                                   !mFocusManager.isZslEnabled() &&
+                                   CameraUtil.SCENE_MODE_HDR.equals(mSceneMode));
             if (needRestartPreview) {
                 setupPreview();
                 if (CameraUtil.FOCUS_MODE_CONTINUOUS_PICTURE.equals(
