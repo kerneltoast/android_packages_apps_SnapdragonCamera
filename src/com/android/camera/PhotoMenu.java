@@ -676,7 +676,6 @@ public class PhotoMenu extends MenuController
             popup1.setPreferenceEnabled(CameraSettings.KEY_CONTRAST, false);
             popup1.setPreferenceEnabled(CameraSettings.KEY_SHARPNESS, false);
             popup1.setPreferenceEnabled(CameraSettings.KEY_COLOR_EFFECT, false);
-            popup1.setPreferenceEnabled(CameraSettings.KEY_FLASH_MODE, false);
             popup1.setPreferenceEnabled(CameraSettings.KEY_WHITE_BALANCE, false);
             popup1.setPreferenceEnabled(CameraSettings.KEY_EXPOSURE, false);
         }
@@ -693,6 +692,11 @@ public class PhotoMenu extends MenuController
             popup1.setPreferenceEnabled(CameraSettings.KEY_FACE_RECOGNITION, false);
         }
         popup1.setPreferenceEnabled(CameraSettings.KEY_ZSL, !mUI.isCountingDown());
+
+        if (Parameters.SCENE_MODE_HDR.equals(sceneMode)) {
+            popup1.setPreferenceEnabled(CameraSettings.KEY_FLASH_MODE, false);
+            popup1.setPreferenceEnabled(CameraSettings.KEY_ZSL, false);
+        }
 
         pref = mPreferenceGroup.findPreference(CameraSettings.KEY_ADVANCED_FEATURES);
         String advancedFeatures = (pref != null) ? pref.getValue() : null;

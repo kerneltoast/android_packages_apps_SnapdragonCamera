@@ -1818,27 +1818,28 @@ public class PhotoModule
         // If scene mode is set, for flash mode, white balance and focus mode
         // read settings from preferences so we retain user preferences.
         if (!Parameters.SCENE_MODE_AUTO.equals(mSceneMode)) {
-            flashMode = mParameters.getFlashMode();
-            String whiteBalance = Parameters.WHITE_BALANCE_AUTO;
+            flashMode = null;
             focusMode = mFocusManager.getFocusMode(false);
             colorEffect = mParameters.getColorEffect();
             exposureCompensation =
                 Integer.toString(mParameters.getExposureCompensation());
             touchAfAec = mCurrTouchAfAec;
 
-            overrideCameraSettings(flashMode, whiteBalance, focusMode,
+            if (Parameters.SCENE_MODE_HDR.equals(mSceneMode)) {
+                flashMode = mPreferences.getString(CameraSettings.KEY_FLASH_MODE, "auto");
+                disableLongShot = true;
+            }
+
+            overrideCameraSettings(flashMode,
+                    mPreferences.getString(CameraSettings.KEY_WHITE_BALANCE, "auto"),
+                    focusMode,
                     exposureCompensation, touchAfAec,
                     mParameters.getAutoExposure(),
-                    Integer.toString(mParameters.getSaturation()),
-                    Integer.toString(mParameters.getContrast()),
-                    Integer.toString(mParameters.getSharpness()),
+                    mPreferences.getString(CameraSettings.KEY_SATURATION, "5"),
+                    mPreferences.getString(CameraSettings.KEY_CONTRAST, "5"),
+                    mPreferences.getString(CameraSettings.KEY_SHARPNESS, "2"),
                     colorEffect,
                     sceneMode, redeyeReduction, aeBracketing);
-            if (CameraUtil.SCENE_MODE_HDR.equals(mSceneMode)) {
-                disableLongShot = true;
-                mUI.overrideSettings(CameraSettings.KEY_ZSL,
-                    mPreferences.getString(CameraSettings.KEY_ZSL, "off"));
-            }
         } else if (mFocusManager.isZslEnabled()) {
             focusMode = mParameters.getFocusMode();
             overrideCameraSettings(flashMode, null, focusMode,
@@ -3627,31 +3628,31 @@ public class PhotoModule
             Log.w(TAG, "invalid exposure range: " + value);
         }
 
+        // Set flash mode.
+        String flashMode = mPreferences.getString(
+                CameraSettings.KEY_FLASH_MODE,
+                mActivity.getString(R.string.pref_camera_flashmode_default));
+        List<String> supportedFlash = mParameters.getSupportedFlashModes();
+
+        String shutterSpeed = mPreferences.getString(
+                CameraSettings.KEY_SHUTTER_SPEED,
+                mActivity.getString(R.string.pref_camera_shutter_speed_default));
+        if (!shutterSpeed.equals("0")) {
+            // Disable flash for manual exposure
+            flashMode = "off";
+        }
+
+        if (CameraUtil.isSupported(flashMode, supportedFlash)) {
+            mParameters.setFlashMode(flashMode);
+        } else {
+            flashMode = mParameters.getFlashMode();
+            if (flashMode == null) {
+                flashMode = mActivity.getString(
+                        R.string.pref_camera_flashmode_no_flash);
+            }
+        }
+
         if (Parameters.SCENE_MODE_AUTO.equals(mSceneMode)) {
-            // Set flash mode.
-            String flashMode = mPreferences.getString(
-                    CameraSettings.KEY_FLASH_MODE,
-                    mActivity.getString(R.string.pref_camera_flashmode_default));
-            List<String> supportedFlash = mParameters.getSupportedFlashModes();
-
-            String shutterSpeed = mPreferences.getString(
-                    CameraSettings.KEY_SHUTTER_SPEED,
-                    mActivity.getString(R.string.pref_camera_shutter_speed_default));
-            if (!shutterSpeed.equals("0")) {
-                // Disable flash for manual exposure
-                flashMode = "off";
-            }
-
-            if (CameraUtil.isSupported(flashMode, supportedFlash)) {
-                mParameters.setFlashMode(flashMode);
-            } else {
-                flashMode = mParameters.getFlashMode();
-                if (flashMode == null) {
-                    flashMode = mActivity.getString(
-                            R.string.pref_camera_flashmode_no_flash);
-                }
-            }
-
             // Set white balance parameter.
             if ((mManual3AEnabled & MANUAL_WB) == 0) {
                 String whiteBalance = mPreferences.getString(
@@ -3677,9 +3678,6 @@ public class PhotoModule
             mFocusManager.overrideFocusMode(mParameters.getFocusMode());
             if (hdrOn)
                 mParameters.setFlashMode(Parameters.FLASH_MODE_OFF);
-            else {
-                mParameters.setFlashMode(Parameters.FLASH_MODE_AUTO);
-            }
             if (CameraUtil.isSupported(Parameters.WHITE_BALANCE_AUTO,
                     mParameters.getSupportedWhiteBalance())) {
                 mParameters.setWhiteBalance(Parameters.WHITE_BALANCE_AUTO);
