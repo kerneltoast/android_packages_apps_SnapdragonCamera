@@ -1250,6 +1250,9 @@ public class PhotoModule
                     && (mSnapshotMode != CameraInfo.CAMERA_SUPPORT_MODE_ZSL)
                     && ((mReceivedSnapNum == mBurstSnapNum) && (mCameraState != LONGSHOT));
             needRestartPreview |= (isLongshotDone() && !mFocusManager.isZslEnabled());
+            needRestartPreview |= ((mReceivedSnapNum == mBurstSnapNum) &&
+                                   !mFocusManager.isZslEnabled() &&
+                                   CameraUtil.SCENE_MODE_HDR.equals(mSceneMode));
             if (needRestartPreview) {
                 setupPreview();
                 if (CameraUtil.FOCUS_MODE_CONTINUOUS_PICTURE.equals(
@@ -2725,7 +2728,8 @@ public class PhotoModule
 
     @Override
     public void stopPreview() {
-        if (mCameraDevice != null && mCameraState != PREVIEW_STOPPED) {
+        boolean isPreviewing = mCameraDevice.getCamera().previewEnabled();
+        if (mCameraDevice != null && isPreviewing) {
             if (mCameraState == LONGSHOT) {
                 mCameraDevice.setLongshot(false);
                 mLongshotActive = false;
