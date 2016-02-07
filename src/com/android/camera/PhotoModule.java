@@ -2108,7 +2108,8 @@ public class PhotoModule
 
     @Override
     public synchronized void onShutterButtonClick() {
-        if (mPaused || mShutterPressing
+        if ((mCameraDevice == null)
+                || mPaused || mShutterPressing
                 || mUI.collapseCameraControls()
                 || (mCameraState == SWITCHING_CAMERA)
                 || (mCameraState == PREVIEW_STOPPED)) return;
@@ -2218,6 +2219,11 @@ public class PhotoModule
     @Override
     public void onResumeBeforeSuper() {
         mPaused = false;
+        mPreferences = new ComboPreferences(mActivity);
+        CameraSettings.upgradeGlobalPreferences(mPreferences.getGlobal(), mActivity);
+        mCameraId = getPreferredCameraId(mPreferences);
+        mPreferences.setLocalId(mActivity, mCameraId);
+        CameraSettings.upgradeLocalPreferences(mPreferences.getLocal());
     }
 
     private void openCamera() {
@@ -2264,6 +2270,7 @@ public class PhotoModule
             Log.v(TAG, "On resume.");
             onResumeTasks();
         }
+        mUI.setSwitcherIndex();
         mHandler.post(new Runnable(){
             @Override
             public void run(){
@@ -2955,6 +2962,7 @@ public class PhotoModule
         if (CameraUtil.isSupported(colorEffect, mParameters.getSupportedColorEffects())) {
             mParameters.setColorEffect(colorEffect);
         }
+
         //Set Saturation
         String saturationStr = mPreferences.getString(
                 CameraSettings.KEY_SATURATION,
