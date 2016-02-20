@@ -166,6 +166,7 @@
         <item>(4:3) 13.1 MP</item>
         <item>(4:3) 13 MP</item>
         <item>(4:3) 12 MP</item>
+        <item>(4:3) 8 MP</item>
         <item>(4:3) 7.7 MP</item>
         <item>(4:3) 5 MP</item>
         <item>(4:3) 3.1 MP</item>
@@ -185,6 +186,7 @@
         <item>4208x3120</item>
         <item>4160x3120</item>
         <item>4000x3000</item>
+        <item>3264x2448</item>
         <item>3200x2400</item>
         <item>2592x1944</item>
         <item>2048x1536</item>
